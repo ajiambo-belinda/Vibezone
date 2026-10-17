@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibezone app</title>
+
+    <!---ICONSCOUT CDN--->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.2.0/css/line.css">
+
+    <!----STYLESHEET--->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!---1. NAVBAR--->
+    <nav>
+        <div class="container">
+            <h2 class="logo">
+                Vibezone
+            </h2>
+
+            <!---search bar div--->
+            <div class="searchbar">
+                <i class="uil uil-search"></i>
+                <input type="search" placeholder="search for creators, inspirations and projects">
+            </div>
+
+            <!---create div--->
+            <div class="create">
+                <label class="btn btn-primary" for="create-post">
+                    create
+                </label>
+
+                <!--profile div-->
+                <div class="profile-photo">
+                    <img src="./images/profile.jpg">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!--------2.MAIN/HERO SECTION------>
+    <main>
+        <div class="container">
+
+            <!-------LEFT------>
+            <div class="left">
+                <a class="aprofile">
+                    <div class="profile-photo">
+                        <img src="./images/profile.jpg">
+                    </div>
+                    <div class="handle">
+                        <h4>Lynda AI</h4>
+                        <p class="text-muted">
+                            @AI
+                        </p>
+                    </div>
+                </a>
+
+                <!-----sidebar----->
+                <div class="sidebar">
+                    <a class="menu-items active">
+                        <span><i class="uil uil-home"></i></span><h3>Home</h3>
+                    </a>
+                    <a class="menu-items ">
+                        <span><i class="uil uil-compass"></i></span><h3>Explore</h3>
+                    </a>
+                    <a class="menu-items" id="notifications">
+                        <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
+
+                        <!--------------NOTIFICATION POPUP-------->
+                        <div class="notifications-popup">
+                            <div>
+                                <div class="profile-photo">
+                                    <img src="./images/profile-2.jpg">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Anjela Ivy</b> accepted your friend request
+                                    <small class="text-muted">2 DAYS AGO</small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="profile-photo">
+                                    <img src="./images/profile-3.jpg">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Stacy Onsongo</b> commented on your post
+                                    <small class="text-muted">1 HOUR AGO</small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="profile-photo">
+                                    <img src="./images/profile-4.jpg">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Brian Wafula</b> commented on a post you are tagged in
+                                    <small class="text-muted">30 MINUTES AGO</small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="profile-photo">
+                                    <img src="./images/profile-5.jpg">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Daisy Oyoo</b> and 33 others liked your post
+                                    <small class="text-muted">2 HOURS AGO</small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="profile-photo">
+                                    <img src="./images/profile-6.jpg">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Rose Nyamu</b> tagged you and 7 others
+                                    <small class="text-muted">10 HOURS AGO</small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="profile-photo">
+                                    <img src="./images/profile-7.jpg">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Ketty Harry</b> commented on a post you are tagged in
+                                    <small class="text-muted">1 HOUR AGO</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!--------END OF NOTIFICATION POPUP--------->
+                    </a>
+
+                    <a class="menu-items" id="messages-notifications">
+                        <span><i class="uil uil-envelope"> <small class="notification-count">6</small></i></span><h3>Messages</h3>
+                    </a>
+                    <a class="menu-items ">
+                        <span><i class="uil uil-bookmark"></i></span><h3>Bookmarks</h3>
+                    </a>
+                    <a class="menu-items ">
+                        <span><i class="uil uil-chart-line"></i></span><h3>Analytics</h3>
+                    </a>
+                    <a class="menu-items ">
+                        <span><i class="uil uil-palette"></i></span><h3>Theme</h3>
+                    </a>
+                    <a class="menu-items active ">
+                        <span><i class="uil uil-setting"></i></span><h3>Settings</h3>
+                    </a>
+                </div>
+                <!-----------END OF SIDEBAR-------->
+
+                <label for="create-post" class=" btn btn-primary">Create post</label>
+            </div>
+
+            <!--------MIDDLE----->
+            <div class="middle">
+                <!----------------stories-------------->
+                <div class="stories">
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="./images/profile-8.jpg">
+                        </div>
+                        <p class="name">Your story</p>
+                    </div>
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="./images/profile-9.jpg">
+                        </div>
+                        <p class="name">Queen Nimoh</p>
+                    </div>
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="./images/profile-10.jpg">
+                        </div>
+                        <p class="name">Sharon</p>
+                    </div>
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="./images/profile-11.jpg">
+                        </div>
+                        <p class="name">Ivan</p>
+                    </div>
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="./images/profile-12.jpg">
+                        </div>
+                        <p class="name">Moureen</p>
+                    </div>
+                    <div class="story">
+                        <div class="profile-photo">
+                            <img src="./images/profile-13.jpg">
+                        </div>
+                        <p class="name">Vivian</p>
+                    </div>
+                </div>
+                <!----------End 0f stories-------->
+                <form class="create-post">
+                    <div class="profile-photo">
+                        <img src="./images/profile-14.jpg">
+                    </div>
+                    <input type="text" placeholder="What is on your mind, Lynda? create-post">
+                    <input type="submit" value="post" class="btn btn-primary">
+                </form>
+            </div>
+
+            <!---------RIGHT----->
+            <div class="right"></div>
+
+        </div>
+    </main>
+</body>
+</html>
