@@ -221,7 +221,9 @@ Bg3.addEventListener('click', () => {
     changeBG();
 });
 //================================POSTS FROM API===================
-const API_URL = 'http://localhost:5000/api/posts';
+const API_URL = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
+    ? 'http://localhost:5000/api/posts'
+    : 'https://vibezone-backend-gmvu.onrender.com/api/posts';
 const feedsContainer = document.querySelector('.feeds');
 
 // turns a date into "15 MINUTES AGO"
@@ -382,21 +384,6 @@ feedsContainer.addEventListener('click', async (e) => {
     } catch (err) {
         console.log('Could not update like:', err.message);
     }
-});
-
-// unlike a post
-router.patch('/:id/unlike', async (req, res) => {
-  try {
-    const post = await Post.findOneAndUpdate(
-      { _id: req.params.id, likes: { $gt: 0 } },
-      { $inc: { likes: -1 } },
-      { new: true }
-    );
-    if (!post) return res.status(404).json({ message: 'Post not found or has no likes' });
-    res.json(post);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
 });
 
 // END
