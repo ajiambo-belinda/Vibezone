@@ -382,6 +382,11 @@ main .container .left .profile{
 .middle .liked-by{
   display: flex;
 }
+
+.middle .feed .edit{
+  cursor: pointer;
+}
+
 .middle .liked-by span{
   width: 1.4rem;
   height: 1.4rem;
@@ -396,6 +401,19 @@ main .container .left .profile{
 }
 .middle .liked-by p{
   margin-left: 0.5rem;
+}
+
+.middle .feed .like-btn{
+  cursor: pointer;
+}
+
+.middle .feed .like-btn.liked i{
+  color: var(--color-danger);
+}
+
+.middle .feed .like-btn svg{
+  color: var(--color-danger);
+  vertical-align: -0.15em;
 }
 
 /*============================RIGHT======================*/
