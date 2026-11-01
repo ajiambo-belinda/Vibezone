@@ -350,6 +350,36 @@ main .container .left .profile{
   margin-right: 1rem;
 }
 
+.middle .create-post .image-btn{
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+.middle .image-preview{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: var(--card-padding);
+  background: var(--color-white);
+  border-radius: var(--card-border-radius);
+}
+.middle .image-preview:empty{
+  display: none;
+}
+.middle .image-preview img{
+  width: 6rem;
+  border-radius: var(--card-border-radius);
+}
+.middle .image-preview span{
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
 /*----------------------FEEDS-------------------*/
 .middle .feeds .feed{
   background: var(--color-white);

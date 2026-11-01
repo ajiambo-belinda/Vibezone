@@ -198,12 +198,15 @@
                 <!--------------------END OF STORIES----------------->
 
                 <form class="create-post" id="post-form">
-                    <div class="profile-photo">
-                        <img src="./images/profile-14.jpg">
-                    </div>
-                    <input type="text" placeholder="what's on your mind Lyndah" id="create-post">
-                    <input type="submit" value="post" class="btn btn-primary">
-                </form>
+    <div class="profile-photo">
+        <img src="./images/profile-14.jpg">
+    </div>
+    <input type="text" placeholder="what's on your mind Lyndah" id="create-post">
+    <label for="post-image" class="image-btn"><i class="uil uil-image"></i></label>
+    <input type="file" id="post-image" accept="image/*" hidden>
+    <input type="submit" value="post" class="btn btn-primary">
+</form>
+<div class="image-preview" id="image-preview"></div>
 
                 <!------------------------FEEDS-------------------->
                 <div class="feeds">

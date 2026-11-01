@@ -419,30 +419,49 @@ updateAuthUI();
 //================================CREATE POST===================
 const postForm = document.querySelector('#post-form');
 const postInput = document.querySelector('#create-post');
+const postImage = document.querySelector('#post-image');
+const imagePreview = document.querySelector('#image-preview');
+
+// show a small preview of the chosen picture
+postImage.addEventListener('change', () => {
+    const file = postImage.files[0];
+    if (!file) {
+        imagePreview.innerHTML = '';
+        return;
+    }
+    imagePreview.innerHTML = `<img src="${URL.createObjectURL(file)}"><span id="remove-image">Remove</span>`;
+});
+
+// remove the chosen picture
+imagePreview.addEventListener('click', (e) => {
+    if (e.target.id === 'remove-image') {
+        postImage.value = '';
+        imagePreview.innerHTML = '';
+    }
+});
 
 postForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const caption = postInput.value.trim();
-    if (caption === '') return;
+    const file = postImage.files[0];
+    if (caption === '' && !file) return;
 
     if (!getToken()) {
         openAuth();
         return;
     }
 
+    const formData = new FormData();
+    formData.append('location', 'Nairobi');
+    formData.append('caption', caption);
+    formData.append('image', file ? file : './images/feed-2.jpg');
+
     try {
         const res = await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getToken()}`
-            },
-            body: JSON.stringify({
-                location: 'Nairobi',
-                caption: caption,
-                image: './images/feed-2.jpg'
-            })
+            headers: { 'Authorization': `Bearer ${getToken()}` },
+            body: formData
         });
 
         if (res.status === 401) {
@@ -453,7 +472,15 @@ postForm.addEventListener('submit', async (e) => {
             return;
         }
 
+        if (!res.ok) {
+            const data = await res.json();
+            alert(data.message);
+            return;
+        }
+
         postInput.value = '';
+        postImage.value = '';
+        imagePreview.innerHTML = '';
         loadPosts();
     } catch (err) {
         console.log('Could not create post:', err.message);
