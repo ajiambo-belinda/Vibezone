@@ -314,6 +314,108 @@ const loadPosts = async () => {
 
 loadPosts();
 
+//================================LOGIN / SIGN UP===================
+const AUTH_URL = API_URL.replace('/posts', '/auth');
+const authModal = document.querySelector('#auth-modal');
+const authForm = document.querySelector('#auth-form');
+const authTitle = document.querySelector('#auth-title');
+const authSubtitle = document.querySelector('#auth-subtitle');
+const authName = document.querySelector('#auth-name');
+const authEmail = document.querySelector('#auth-email');
+const authPassword = document.querySelector('#auth-password');
+const authError = document.querySelector('#auth-error');
+const authSubmit = document.querySelector('#auth-submit');
+const authSwitchText = document.querySelector('#auth-switch-text');
+const authSwitch = document.querySelector('#auth-switch');
+const authOpen = document.querySelector('#auth-open');
+const profileName = document.querySelector('#profile-name');
+const profileHandle = document.querySelector('#profile-handle');
+
+const getToken = () => localStorage.getItem('token');
+const getUser = () => JSON.parse(localStorage.getItem('user'));
+
+let authMode = 'login';
+
+const setAuthMode = (mode) => {
+    authMode = mode;
+    const isLogin = mode === 'login';
+    authTitle.textContent = isLogin ? 'Log in' : 'Sign up';
+    authSubtitle.textContent = isLogin ? 'Welcome back to Vibezone' : 'Create your Vibezone account';
+    authSubmit.textContent = isLogin ? 'Log in' : 'Sign up';
+    authSwitchText.textContent = isLogin ? 'No account yet?' : 'Already have an account?';
+    authSwitch.textContent = isLogin ? 'Sign up' : 'Log in';
+    authName.classList.toggle('hidden', isLogin);
+    authName.required = !isLogin;
+    authError.textContent = '';
+};
+
+const openAuth = () => {
+    setAuthMode('login');
+    authModal.style.display = 'grid';
+};
+
+const closeAuth = () => {
+    authModal.style.display = 'none';
+    authForm.reset();
+    authError.textContent = '';
+};
+
+const updateAuthUI = () => {
+    const user = getUser();
+    authOpen.textContent = user ? 'Log out' : 'Log in';
+    profileName.textContent = user ? user.name : 'Guest';
+    profileHandle.textContent = user ? '@' + user.name.split(' ')[0].toLowerCase() : '@guest';
+};
+
+authSwitch.addEventListener('click', () => {
+    setAuthMode(authMode === 'login' ? 'signup' : 'login');
+});
+
+authModal.addEventListener('click', (e) => {
+    if (e.target === authModal) closeAuth();
+});
+
+authOpen.addEventListener('click', () => {
+    if (getToken()) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        updateAuthUI();
+    } else {
+        openAuth();
+    }
+});
+
+authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    authError.textContent = '';
+
+    const body = { email: authEmail.value, password: authPassword.value };
+    if (authMode === 'signup') body.name = authName.value;
+
+    try {
+        const res = await fetch(`${AUTH_URL}/${authMode === 'login' ? 'login' : 'register'}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+            authError.textContent = data.message;
+            return;
+        }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        closeAuth();
+        updateAuthUI();
+    } catch (err) {
+        authError.textContent = 'Could not reach the server';
+    }
+});
+
+updateAuthUI();
+
 //================================CREATE POST===================
 const postForm = document.querySelector('#post-form');
 const postInput = document.querySelector('#create-post');
@@ -324,17 +426,32 @@ postForm.addEventListener('submit', async (e) => {
     const caption = postInput.value.trim();
     if (caption === '') return;
 
+    if (!getToken()) {
+        openAuth();
+        return;
+    }
+
     try {
-        await fetch(API_URL, {
+        const res = await fetch(API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            },
             body: JSON.stringify({
-                authorName: 'Lynda Ivy',
                 location: 'Nairobi',
                 caption: caption,
                 image: './images/feed-2.jpg'
             })
         });
+
+        if (res.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            updateAuthUI();
+            openAuth();
+            return;
+        }
 
         postInput.value = '';
         loadPosts();
@@ -344,6 +461,7 @@ postForm.addEventListener('submit', async (e) => {
 });
 
 //================================DELETE POST===================
+
 feedsContainer.addEventListener('click', async (e) => {
     const editBtn = e.target.closest('.edit');
     if (!editBtn) return;
@@ -351,10 +469,25 @@ feedsContainer.addEventListener('click', async (e) => {
     const id = editBtn.dataset.id;
     if (!id) return;
 
+    if (!getToken()) {
+        openAuth();
+        return;
+    }
+
     if (!confirm('Delete this post?')) return;
 
     try {
-        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${API_URL}/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${getToken()}` }
+        });
+
+        if (!res.ok) {
+            const data = await res.json();
+            alert(data.message);
+            return;
+        }
+
         loadPosts();
     } catch (err) {
         console.log('Could not delete post:', err.message);
